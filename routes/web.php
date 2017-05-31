@@ -14,6 +14,11 @@
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('bienvenidos', function () {
+
+Route::get('bienvenido', function () {
     return view('presentacion');
+});
+
+Route::get('area', function () {
+    return view('areas.index');
 });
