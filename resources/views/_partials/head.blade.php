@@ -12,7 +12,7 @@
     <title>Bare - Start Bootstrap Template</title>
 
     <!-- Bootstrap Core CSS -->
-    {!!Html::style('assets/css/bootstrap.min.css')!!}
+    {!!Html::style('public/assets/css/bootstrap.min.css')!!}
     <style>
         body {
             padding-top: 70px;
