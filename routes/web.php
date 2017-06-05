@@ -19,6 +19,8 @@ Route::get('bienvenido', function () {
     return view('presentacion');
 });
 
-Route::get('area', function () {
+/*Route::get('area', function () {
     return view('areas.index');
-});
+});*/
+Route::get('get_areas', 'AreaController@get_areas');
+Route::resource('area', 'AreaController');

@@ -13,6 +13,7 @@
 
     <!-- Bootstrap Core CSS -->
     {!!Html::style('public/assets/css/bootstrap.min.css')!!}
+    {!!Html::style('public/assets/css/cssDataTables.css')!!}
     <style>
         body {
             padding-top: 70px;

@@ -9,18 +9,18 @@
         <h4 class="modal-title">Modal Header</h4>
     </div>
     <div class="modal-body">
-       {!! Form::open() !!}       
+       {!! Form::open(['id'=>'form']) !!}
         <div class="form-group">
             {!! Form::label('Nombre de area', null, ['class' => 'control-label']) !!}
             {!! Form::email('area', null, ['class' => 'form-control','id' => 'area'])!!}
-            
+
         </div>
         <div class="form-group">
             {!! Form::label('Sector del area', null, ['class' => 'control-label']) !!}
             {!! Form::email('sector', null, ['class' => 'form-control','id' => 'sector'])!!}
         </div>
-        {!!Form::submit('Registrar',['class'=>"btn btn-success"]);!!}
-        
+        <button type="button" class="btn btn-success" data-dismiss="modal" id="agregar">Registrar</button>
+
     {!! Form::close() !!}
 </div>
 <div class="modal-footer">
