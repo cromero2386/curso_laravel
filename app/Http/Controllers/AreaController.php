@@ -112,6 +112,8 @@ class AreaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $usuario=Area::findOrFail($id);
+        $usuario->delete();
+        //return $this->index();
     }
 }

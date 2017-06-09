@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="Lic. Romero, Carlos Alberto">
-    <title>Bare - Start Bootstrap Template</title>
+    <title>Curso Laravel Prominf</title>
 
     <!-- Bootstrap Core CSS -->
     {!!Html::style('public/assets/css/bootstrap.min.css')!!}

@@ -34,6 +34,7 @@
         $("body").on("click","button.editar",function(){
             $('.modal-title').html('Modificar contenido seleccionado');
             var id = $(this).parent("td").prev("td").prev("td").prev("td").text();
+            console.log(id);
             var route = "area"+'/'+id+'/edit';
             $.get(route, function(res){
                 $("#id").val(res.id);
@@ -47,28 +48,43 @@
         });
 
         $("#editar_re").click(function() {
-          var value = $("#id").val();
-          //action = "area"+'/'+value;
-          var nombre_a = $('#nombre_a').val();
-          var sector_a =$('#sector_a').val();
-          var datas='nombre_a='+nombre_a+'&sector_a='+sector_a;
-          var token = $('input:hidden[name=_token]').val();
-          $.ajax({
-            url:"{{url('area')}}"+'/'+value,
-            type:'PUT',
-            headers:{'X-CSRF-TOKEN':token},
-            data: datas ,
-            success: function(){
-                lista();
-                $('#myModal1').modal('toggle');
-                $('#myModal1').find("input").val('').end();
-            },
-            error : function(responseText){
-                alert("ERROR :: ");
-            }
+            var value = $("#id").val();
+            //action = "area"+'/'+value;
+            var nombre_a = $('#nombre_a').val();
+            var sector_a =$('#sector_a').val();
+            var datas='nombre_a='+nombre_a+'&sector_a='+sector_a;
+            var token = $('input:hidden[name=_token]').val();
+            $.ajax({
+                url:"{{url('area')}}"+'/'+value,
+                type:'PUT',
+                headers:{'X-CSRF-TOKEN':token},
+                data: datas ,
+                success: function(){
+                    lista();
+                    $('#myModal1').modal('toggle');
+                    $('#myModal1').find("input").val('').end();
+                },
+                error : function(responseText){
+                    alert("ERROR :: ");
+                }
+            });
         });
-
-      });
+        $("body").on("click","button.eliminar",function(){
+            var id = $(this).parent("td").prev("td").prev("td").prev("td").prev("td").text();
+            var token = $('input:hidden[name=_token]').val();
+            console.log(id);
+            $.ajax({
+                url:"{{url('area')}}"+'/'+id,
+                type:'DELETE',
+                headers:{'X-CSRF-TOKEN':token},
+                success: function(){
+                    lista();
+                },
+                error : function(responseText){
+                    alert("ERROR :: ");
+                }
+            });
+        });
     });
     function lista(){
         $('#example').empty();
@@ -90,7 +106,10 @@
                 {"data": "sector", "title":"Sector"},
                 {"data":null,"title":"Editar <i class='fa fa-pencil-square-o' aria-hidden='true'></i>",
                 "defaultContent":"<button type='button' id='editar' class='editar btn btn-warning' data-toggle='modal' data-target='#myModal1'><i class='fa fa-pencil-square-o' aria-hidden='true'></i> Editar</button>"
-                }
+                },
+                {"data":null,"title":"Eliminar",
+                "defaultContent":"<button type='button' id='eliminar' class='eliminar btn btn-link'> Eliminar</button>"
+            }
             ]
         });
     }
