@@ -22,5 +22,9 @@ Route::get('bienvenido', function () {
 /*Route::get('area', function () {
     return view('areas.index');
 });*/
-Route::get('get_areas', 'AreaController@get_areas');
 Route::resource('area', 'AreaController');
+Route::get('get_areas', 'AreaController@get_areas');
+Route::get('/home', 'HomeController@index')->name('home');
+Auth::routes();
+
+

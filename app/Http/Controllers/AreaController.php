@@ -40,16 +40,22 @@ class AreaController extends Controller
     {
         //
     }
-
     /**
      * Store a newly created resource in storage.
-     *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
+       if ($request->ajax()) {
+        Area::create([
+            'nombre'=>$request['nombre'],
+            'sector'=>$request['sector'],
+            ]);
+        }
+        return response()->json([
+            "mensaje"=>"Registro Agregado"
+            ]);
     }
 
     /**
@@ -71,7 +77,10 @@ class AreaController extends Controller
      */
     public function edit($id)
     {
-        //
+        $area =Area::findOrFail($id);
+        return response()->json(
+          $area->toArray()
+        );
     }
 
     /**
@@ -83,7 +92,16 @@ class AreaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $area =Area::findOrFail($id);
+        $area->fill([
+                'nombre'=>$request['nombre_a'],
+                'sector'=>$request['sector_a'],
+        ]);
+        $area->save();
+
+        return response()->json([
+            "mensaje"=>"modificación exitosa"
+        ]);
     }
 
     /**
