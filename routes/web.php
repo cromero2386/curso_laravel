@@ -11,20 +11,17 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
-Route::get('bienvenido', function () {
-    return view('presentacion');
-});
 
-/*Route::get('area', function () {
-    return view('areas.index');
-});*/
-Route::resource('area', 'AreaController');
-Route::get('get_areas', 'AreaController@get_areas');
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index');
+
 Auth::routes();
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('bienvenido', function () {
+        return view('presentacion');
+    });
+    Route::resource('area', 'AreaController');
+    Route::get('get_areas', 'AreaController@get_areas');
 
+});
 
