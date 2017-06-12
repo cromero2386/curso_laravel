@@ -9,10 +9,85 @@
 @section('script')
   <script>
     $(function() {
-        $('#agregar').click(function(){
+        $("#form_1").validate({
+            rules: {
+                nombre: {
+                    required: true
+                },
+                sector: {
+                    required: true
+                }
+            },
+            messages: {
+                nombre: {
+                    required: "Por favor ingrese un nombre"
+                },
+                sector: {
+                    required: "Por favor ingrese un nombre"
+                }
+            },
+            errorElement: "em",
+            errorPlacement: function(error, element) {
+                // Add the `help-block` class to the error element
+                error.addClass("help-block");
+                // Add `has-feedback` class to the parent div.form-group
+                // in order to add icons to inputs
+                element.parents(".form-group").addClass("has-feedback");
+
+                    if (element.prop("type") === "checkbox") {
+                        error.insertAfter(element.parent("label"));
+                    } else {
+                        error.insertAfter(element);
+                    }
+                    // Add the span element, if doesn't exists, and apply the icon classes to it.
+                    if (!element.next("span")[0]) {
+                        $("<span class='glyphicon glyphicon-remove form-control-feedback'></span>").insertAfter(element);
+                    }
+            },
+            success: function(label, element) {
+                // Add the span element, if doesn't exists, and apply the icon classes to it.
+                if (!$(element).next("span")[0]) {
+                    $("<span class='glyphicon glyphicon-ok form-control-feedback'></span>").insertAfter($(element));
+
+                }
+            },
+            highlight: function(element, errorClass, validClass) {
+                $(element).parents(".form-group").addClass("has-error").removeClass("has-success");
+                $(element).next("span").addClass("glyphicon-remove").removeClass("glyphicon-ok");
+            },
+            unhighlight: function(element, errorClass, validClass) {
+                $(element).parents(".form-group").addClass("has-success").removeClass("has-error");
+                $(element).next("span").addClass("glyphicon-ok").removeClass("glyphicon-remove");
+            },
+            submitHandler: function(form) {
+                var nombre = $('#nombre').val();
+                var sector =$('#sector').val();
+                var datas='nombre='+nombre+'&sector='+sector;
+                ///alert(data);
+                var token = $('input:hidden[name=_token]').val();
+                $.ajax({
+                    url:"{{url('area')}}",
+                    type:'POST',
+                    headers:{'X-CSRF-TOKEN':token},
+                    data: datas,
+                    success: function(){
+                        lista();
+                        $('#myModal').modal('toggle');
+                        $('#myModal').find("input").val('').end();
+                    },
+                    error : function(responseText){
+                        alert("ERROR :: ");
+                    }
+                });
+            }
+
+       });
+        lista();
+        /*$('#agregar').click(function(){
             var nombre = $('#nombre').val();
             var sector =$('#sector').val();
             var datas='nombre='+nombre+'&sector='+sector;
+            ///alert(data);
             var token = $('input:hidden[name=_token]').val();
             $.ajax({
                 url:"{{url('area')}}",
@@ -29,8 +104,7 @@
                 }
             });
 
-        });
-        lista();
+        });*/
         $("body").on("click","button.editar",function(){
             $('.modal-title').html('Modificar contenido seleccionado');
             var id = $(this).parent("td").prev("td").prev("td").prev("td").text();
@@ -44,6 +118,10 @@
         });
         $("#myModal").on('hidden.bs.modal', function () {
             $(this).find("input").val('').end();
+            $('.form-group').removeClass('has-success has-feedback');
+            $('span').removeClass('glyphicon-ok glyphicon-remove');
+            $('.form-group').removeClass('has-error has-feedback');
+            $('em').remove();
 
         });
 
@@ -69,6 +147,7 @@
                 }
             });
         });
+ });
         $("body").on("click","button.eliminar",function(){
             var id = $(this).parent("td").prev("td").prev("td").prev("td").prev("td").text();
             var token = $('input:hidden[name=_token]').val();
@@ -85,7 +164,7 @@
                 }
             });
         });
-    });
+
     function lista(){
         $('#example').empty();
         var table = $("#example").DataTable({

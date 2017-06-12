@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Area;
-
+use App\User;
 class AreaController extends Controller
 {
     /**
@@ -14,8 +14,9 @@ class AreaController extends Controller
      */
     public function index()
     {
-
-       return view('areas.index'); //muestra en la vista index de areas
+        //$user = User::pluck('name','id');
+        //return view('areas.index',compact('user')); //muestra en la vista index de areas
+        return view('areas.index');
     }
     public function get_areas(){
         try
@@ -53,9 +54,9 @@ class AreaController extends Controller
             'sector'=>$request['sector'],
             ]);
         }
-        return response()->json([
+        /*return response()->json([
             "mensaje"=>"Registro Agregado"
-            ]);
+            ]);*/
     }
 
     /**
